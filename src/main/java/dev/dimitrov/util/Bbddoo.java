@@ -32,7 +32,8 @@ public class Bbddoo {
         if(insti != null){
             ObjectSet<Instituto> instis = db.queryByExample(insti);
             Instituto instiSeleccionado = instis.get(0);
-            instiSeleccionado.expulsarAlumnos(al);
+            instiSeleccionado.matricularAlumno(al);
+            db.store(instiSeleccionado);
         }
         else{
             LOG.error("No se ha podido guardar el alumno porque no hay ningun instituto en el que guardarlo");
@@ -40,8 +41,8 @@ public class Bbddoo {
        
     }
 
-    public List<Alumno> getTodosAlumnos(String nombreInstituto) {
-        ObjectSet<Instituto> insti = db.queryByExample(new Instituto(nombreInstituto,null,null));
+    public List<Alumno> getTodosAlumnos() {
+        ObjectSet<Instituto> insti = db.queryByExample(new Instituto(null,null,null));
         Instituto i = insti.get(0);
         return i.getMatriculados();
     }
@@ -68,15 +69,23 @@ public class Bbddoo {
         if(insti == null){
             LOG.error("No esta guardado aun ningun instituto");
         }
+        else{
+            ObjectSet<Instituto> instituto = db.queryByExample(insti);
+            insti = instituto.get(0);
+        }
 
         return insti;
     }
 
     public boolean borrarInstituto() {
+        boolean status = false;
         if(insti != null){
-            db.delete(insti);
+            Instituto instiDb = this.getInstituto();
+            db.delete(instiDb);
+            insti = null;
+            status = true;
         }
-        return false;
+        return status;
     }
 
     public boolean expulsarATodosAlumnos(){
@@ -101,5 +110,9 @@ public class Bbddoo {
             LOG.warn("No se puede expulsar a ningun alumno porque no hay un instituto guardado");
         }
         return status;
+    }
+
+    public void close(){
+        db.close();
     }
 }
