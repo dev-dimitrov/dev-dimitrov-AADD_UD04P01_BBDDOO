@@ -2,7 +2,6 @@ package dev.dimitrov.util;
 
 import java.io.File;
 import java.util.List;
-import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +16,9 @@ import dev.dimitrov.obj.Instituto;
 public class Bbddoo {
     private static final Logger LOG = LoggerFactory.getLogger(Bbddoo.class);
     private ObjectContainer db = null;
-    private File ficheroBd = null;
+    private Instituto insti = null;
     public Bbddoo(File ficheroBd, boolean overwrite){
+
         if(overwrite && ficheroBd.exists()){
             LOG.warn("Se borra la anterior DB");
             ficheroBd.delete();
@@ -40,21 +40,31 @@ public class Bbddoo {
     }
 
     public boolean guardarInstituto(Instituto insti) {
-        db.store(insti);
+        // comprobacion de si hay 2 institutos (Solo se puuede guardar uno)
+        if (this.insti == null){
+            db.store(insti);
+            this.insti = insti;
+        }
+        else{
+            LOG.warn("Ya existe un instituto almacenado");
+        }
+        
+        
         return true;
     }
 
-    public Instituto getInstituto(Instituto institutoBuscado) {
-        Instituto resultado = null;
-        ObjectSet<Instituto> instis = db.queryByExample(institutoBuscado);
-        if(instis.isEmpty()){
+    public Instituto getInstituto() {
+        if(insti == null){
             LOG.error("No se encontró ningun instituo con esas caracteristicas");
         }
 
-        return resultado;
+        return insti;
     }
 
-    public boolean borrarInstituto(Instituto institutoABorrar) {
+    public boolean borrarInstituto() {
+        if(insti != null){
+            db.delete(insti);
+        }
         return false;
     }
 }
