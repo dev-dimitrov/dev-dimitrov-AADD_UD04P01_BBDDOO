@@ -7,14 +7,31 @@ import java.util.List;
 import dev.dimitrov.obj.Alumno;
 import dev.dimitrov.obj.Instituto;
 import dev.dimitrov.util.Bbddoo;
+import dev.dimitrov.util.Bbddoo2;
 
 public class Main {
     public static void main(String[] args) {
-        Bbddoo d = new Bbddoo(new File("insti.db4o"), false);
+        Bbddoo2 d = new Bbddoo2(new File("insti.db4o"), true);
+        Instituto i1 = new Instituto("GTB",2, new ArrayList<Alumno>(List.of(
+            new Alumno("Paco"),
+            new Alumno("Jose"),
+            new Alumno("Luis"),
+            new Alumno("Mateo"),
+            new Alumno("Juan"),
+            new Alumno("Pepe")
+        )));
 
-        List<Alumno> n = d.getTodosAlumnos();
+        Instituto i2 = new Instituto("GTB",2, new ArrayList<Alumno>(List.of(
+            new Alumno("Paco"),
+            new Alumno("Jose"),
+            new Alumno("Luis"),
+            new Alumno("Mateo"),
+            new Alumno("Juan"),
+            new Alumno("Pepe")
+        )));
 
-        System.out.println(n);
+        
+        
 
         d.close();
     }

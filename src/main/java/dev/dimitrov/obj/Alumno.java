@@ -10,6 +10,10 @@ public class Alumno {
         nombre = n;
         edad = ed;
     }
+
+    public Alumno(String n){
+        nombre = n;
+    }
     
     public String getExpediente() {
         return expediente;
