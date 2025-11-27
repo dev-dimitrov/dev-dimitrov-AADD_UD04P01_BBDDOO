@@ -21,16 +21,20 @@ public class Main {
             new Alumno("Pepe")
         )));
 
-        Instituto i2 = new Instituto("GTB",2, new ArrayList<Alumno>(List.of(
-            new Alumno("Paco"),
+        Instituto i2 = new Instituto("ATENEA",2, new ArrayList<Alumno>(List.of(
+            new Alumno("Fran"),
             new Alumno("Jose"),
-            new Alumno("Luis"),
-            new Alumno("Mateo"),
-            new Alumno("Juan"),
-            new Alumno("Pepe")
+            new Alumno("Carlos"),
+            new Alumno("David"),
+            new Alumno("Mortadelo"),
+            new Alumno("Oriol")
         )));
 
-        
+        d.addInstituto(i1);
+        d.addInstituto(i2);
+        d.verTodo();
+        d.guardarAlumno(new Alumno("Alvaro"), i2);
+        d.verTodo();
         
 
         d.close();
