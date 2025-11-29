@@ -1,6 +1,7 @@
 package dev.dimitrov.util;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -42,9 +43,17 @@ public class Bbddoo2 {
     }
 
     
-
+    // Devuelve los alumnos de todos los institutos
     public List<Alumno> getTodosAlumnos() {
-        return null;
+        List<Alumno> todosAlumnos = new ArrayList<>();
+        ObjectSet<Instituto> todosInstis = db.queryByExample(new Instituto(null));
+
+        for(Instituto i: todosInstis){
+            todosAlumnos.addAll(i.getMatriculados());
+        }
+
+        LOG.info("recuperados un total de "+todosAlumnos+" alumno/s");
+        return todosAlumnos;
     }
 
     public void addInstituto(Instituto insti) {
@@ -53,21 +62,29 @@ public class Bbddoo2 {
         LOG.info("Añadido el instituto: con id: "+insti.getIdCentro());
     }
 
+    // Devuelve la primera ocurrencia de ese instituto
     public Instituto getInstituto(Instituto i) {
         ObjectSet<Instituto> instis = db.queryByExample(i);
         return instis.getFirst();
     }
 
-    public boolean borrarInstituto() {
-        boolean status = false;
-        
-        return status;
+    public void borrarInstituto(Instituto insti) {
+        ObjectSet<Instituto> instis = db.queryByExample(insti);
+        int cont = 0;
+        for(Instituto i: instis){
+            db.delete(i);
+            cont ++;
+        }
+        LOG.info("Se borraron un total de "+cont+" institutos de la DB");
     }
 
-    public boolean expulsarATodosAlumnos(){
-        boolean status = false;
+    public void expulsarATodosAlumnos(Instituto i){
+        Instituto institutoRecogido = this.getInstituto(i);
 
-        return status;
+        institutoRecogido.getMatriculados().clear();
+ 
+        db.store(institutoRecogido);
+        LOG.info("Borrados todos los institutos del id: "+i.getIdCentro());
     }
     
     public void verTodo(){

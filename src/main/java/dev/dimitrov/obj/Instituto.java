@@ -24,6 +24,10 @@ public class Instituto {
         matriculados = new ArrayList<>();
     }
 
+    public Instituto(List<Alumno> a){
+        matriculados = a;
+    }
+
     public void matricularAlumno(Alumno al){
         boolean status = matriculados.add(al);
         LOG.info("Alumno "+al.toString()+(status ? "matriculado correctamente" : "No se pudo matricular"));

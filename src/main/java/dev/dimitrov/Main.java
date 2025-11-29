@@ -6,7 +6,6 @@ import java.util.List;
 
 import dev.dimitrov.obj.Alumno;
 import dev.dimitrov.obj.Instituto;
-import dev.dimitrov.util.Bbddoo;
 import dev.dimitrov.util.Bbddoo2;
 
 public class Main {
@@ -35,8 +34,12 @@ public class Main {
         d.verTodo();
         d.guardarAlumno(new Alumno("Alvaro"), i2);
         d.verTodo();
-        
-
+        d.expulsarATodosAlumnos(i2);
+        d.verTodo();
+        d.guardarAlumno(new Alumno("JoseLuis"), i2);
+        d.verTodo();
+        d.borrarInstituto(i2);
+        d.verTodo();
         d.close();
     }
 }
