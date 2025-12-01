@@ -15,6 +15,7 @@ import dev.dimitrov.obj.Alumno;
 import dev.dimitrov.obj.Instituto;
 
 public class Bbddoo3 {
+    
     private static final Logger LOG = LoggerFactory.getLogger(Bbddoo3.class);
     private ObjectContainer db;
 
@@ -94,4 +95,45 @@ public class Bbddoo3 {
         db.close();
     }
 
+    public boolean expulsarATodosAlumnos (String nombreInstituto){
+        boolean status = false;
+        Instituto i = new Instituto(nombreInstituto,null,null);
+        i = getInstituto(i);
+        try{
+            List<Alumno> alumnos = i.getMatriculados();
+            for(Alumno alumno: alumnos){
+                i.expulsarAlumnos(alumno);
+            }
+
+            db.commit();
+            status = true;
+        }
+        catch(Exception e){
+            db.rollback();
+            LOG.error("Ocurrió el siguiente error mientras se borraban alumnos: "+e.getMessage());
+        }
+
+        return status;
+    }
+
+
+    public Instituto consultaInstiMatriculado(String nomAlumno){
+        Instituto target = null;
+        ObjectSet<Instituto> instis = db.queryByExample(new Instituto(null,null,null));
+        for(Instituto instituto: instis){
+            List<Alumno> alumnos = instituto.getMatriculados();
+            for(int i = 0; i<alumnos.size(); i++){
+                if(alumnos.get(i).getNombre().equalsIgnoreCase(nomAlumno)){
+                    target = instituto;
+                    break;
+                }
+            }
+
+            if (target != null){
+                break;
+            }
+        }
+
+        return target;
+    }
 }

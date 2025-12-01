@@ -6,7 +6,6 @@ import java.util.List;
 
 import dev.dimitrov.obj.Alumno;
 import dev.dimitrov.obj.Instituto;
-import dev.dimitrov.util.Bbddoo;
 import dev.dimitrov.util.Bbddoo3;
 
 public class Main2 {
@@ -42,7 +41,8 @@ public class Main2 {
 
         // System.out.println(d.getInstituto(i1).getNombreInsti());
         d.verTodo();
-        d.borrarInstituto(i2);
+        // d.borrarInstituto(i2);
+        System.out.println(d.consultaInstiMatriculado("carlos archidona").getNombreInsti());
         d.verTodo();
         d.close();
     }

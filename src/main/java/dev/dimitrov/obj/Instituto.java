@@ -20,9 +20,11 @@ public class Instituto {
         this.matriculados = matriculados;
     }
 
+
     public Instituto(){
         matriculados = new ArrayList<>();
     }
+
 
     public Instituto(List<Alumno> a){
         matriculados = a;
