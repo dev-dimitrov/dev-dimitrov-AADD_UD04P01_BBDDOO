@@ -99,8 +99,6 @@ public class Bbddoo2 {
                 System.out.println("----------------------------------");
             }   
         }
-        
-
     }
 
     public void close(){
