@@ -68,4 +68,14 @@ public class Instituto {
         return "Instituto [nombreInsti=" + nombreInsti + ", idCentro=" + idCentro + ", matriculados=" + matriculados
                 + "]";
     }
+
+
+    public void setIdCentro(Integer idCentro) {
+        this.idCentro = idCentro;
+    }
+
+
+    public void setMatriculados(List<Alumno> matriculados) {
+        this.matriculados = matriculados;
+    }
 }
